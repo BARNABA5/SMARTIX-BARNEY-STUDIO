@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SmartFix Studio Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg:#090b0f;
+      --card:#0f1720;
+      --muted:#96a6b0;
+      --accent:#3844eb;
+      --glass:rgba(255,255,255,0.03);
+      --max-width:1100px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{
+      height:100%;
+      margin:0;
+      background:linear-gradient(180deg,#071019 0%, #071018 60%);
+      color:#e9e50e;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      scroll-behavior:smooth;
+    }
+
+    .wrap{max-width:var(--max-width);margin:28px auto;padding:24px}
+
+    /* HERO */
+    .hero{
+      display:grid;
+      grid-template-columns:1fr 320px;
+      gap:22px;
+      align-items:center;
+    }
+    .hero-card{
+      background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
+      padding:26px;
+      border-radius:16px;
+      backdrop-filter:blur(6px);
+      box-shadow:0 6px 30px rgba(2,6,10,0.6);
+      animation:fadeIn 1s ease forwards;
+    }
+    .name{font-size:clamp(26px,4vw,40px);font-weight:800;margin:0 0 6px;color:#fff}
+    .glow{color:var(--accent);text-shadow:0 0 12px rgba(110,231,183,0.5);}
+    .tag{color:var(--muted);margin:0 0 8px}
+    .bio{margin:0 0 16px;color:#cfe6e0}
+    .cta{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.06);
+      padding:10px 14px;
+      border-radius:10px;
+      color:var(--accent);
+      cursor:pointer;
+      font-weight:700;
+      transition:0.3s ease;
+    }
+    .btn:hover{
+      background:rgba(110,231,183,0.1);
+      transform:translateY(-2px);
+    }
+    .socials{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap}
+    .socials a{color:var(--muted);text-decoration:none;font-size:14px;transition:0.3s}
+    .socials a:hover{color:var(--accent);}
+    .avatar{width:220px;height:220px;border-radius:14px;overflow:hidden;border:2px solid rgba(255,255,255,0.05)}
+    .avatar img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
+    .avatar img:hover{transform:scale(1.05);}
+
+    /* SECTION TITLES */
+    section{margin-top:42px}
+    .section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+    .section-title h2{margin:0;font-size:18px}
+    .muted{color:var(--muted);font-size:14px}
+
+    /* PROJECTS */
+    .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+    .project{
+      background:var(--card);
+      padding:16px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.02);
+      transform:translateY(18px);
+      opacity:0;
+      transition:all .6s cubic-bezier(.2,.9,.3,1);
+    }
+    .project.visible{transform:none;opacity:1}
+    .project h3{margin:0 0 8px;font-size:16px}
+    .project p{margin:0 0 12px;color:var(--muted);font-size:14px}
+    .links{display:flex;gap:8px;flex-wrap:wrap}
+    .link{
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.04);
+      padding:8px 10px;
+      border-radius:8px;
+      text-decoration:none;
+      color:var(--accent);
+      font-weight:700;
+      transition:0.3s ease;
+    }
+    .link:hover{background:rgba(110,231,183,0.1);}
+
+    /* DESIGNS GALLERY */
+    .gallery{
+      display:flex;
+      gap:20px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+    .design{
+      width:260px;
+      background:linear-gradient(180deg,var(--glass),rgba(255,255,255,0.02));
+      padding:12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.03);
+      box-shadow:0 4px 18px rgba(0,0,0,0.4);
+      transition:transform 0.3s ease, box-shadow 0.3s ease;
+      animation:fadeUp 0.8s ease both;
+    }
+    .design:hover{transform:translateY(-6px);box-shadow:0 6px 25px rgba(0,0,0,0.6);}
+    .design img{width:100%;height:170px;object-fit:cover;border-radius:8px;}
+    .design h4{margin:10px 0 6px;font-size:15px;color:#fff;}
+    .tools{display:flex;justify-content:space-between;align-items:center}
+    .download{
+      font-weight:700;
+      background:var(--accent);
+      padding:8px 10px;
+      border-radius:8px;
+      color:#000;
+      text-decoration:none;
+      font-size:14px;
+      transition:0.3s ease;
+    }
+    .download:hover{background:#9fffd0;transform:translateY(-2px)}
+
+    /* E-BOOKS */
+    .ebooks{display:grid;grid-template-columns:1fr 420px;gap:18px}
+    .ebook-item{
+      display:flex;gap:12px;align-items:center;
+      background:var(--card);padding:10px;border-radius:10px;
+    }
+    .ebook-item img{width:78px;height:110px;object-fit:cover;border-radius:6px}
+    .meta h4{margin:0 0 6px}
+    .read-btn{
+      background:linear-gradient(90deg,#123 0%, #234);
+      border:none;padding:8px 10px;border-radius:8px;color:white;cursor:pointer;
+    }
+    .download-ebook{
+      background:transparent;border:1px solid rgba(255,255,255,0.04);
+      padding:8px;border-radius:8px;color:var(--accent);
+      text-decoration:none;text-align:center;
+    }
+    .viewer{
+      background:var(--card);
+      border-radius:12px;
+      padding:12px;
+      border:1px solid rgba(255,255,255,0.02)
+    }
+    .viewer iframe{width:100%;height:600px;border:none;border-radius:8px}
+
+    footer{
+      margin-top:40px;
+      padding:18px;
+      border-radius:12px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+      display:flex;justify-content:space-between;align-items:center;
+      color:var(--muted);font-size:13px;
+    }
+
+    @media(max-width:980px){.hero{grid-template-columns:1fr}.ebooks{grid-template-columns:1fr}}
+    @media(max-width:520px){.design{width:220px}.avatar{width:160px;height:160px}}
+
+    @keyframes fadeUp{0%{opacity:0;transform:translateY(20px);}100%{opacity:1;transform:none;}}
+    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="hero-card">
+        <p class="tag">Hello —Am Barney</p>
+        <h1 class="name"> Welcome To.. <span class="glow">SmartFix Studio</span></h1>
+        <p class="bio">A creative hub where technology meets imagination. Turning raw ideas into digital masterpieces. 🚀</p>
+        <div class="cta">
+          <button class="btn" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">View Projects</button>
+          <a class="btn" href="#designs">Designs</a>
+          <a class="btn" href="#ebooks">E-Books</a>
+        </div>
+        <div class="socials">
+          <a href="https://github.com/BARNABA5" target="_blank">GitHub</a>
+          <a href="https://www.youtube.com/@Shivay120Barnabas" target="_blank">YouTube</a>
+          <a href="https://www.instagram.com/thirteenth525/" target="_blank">Instagram</a>
+          <a href="https://t.me/PhilipeeBarney" target="_blank">Telegram</a>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:center;align-items:center">
+        <div class="avatar">
+          <img src="/images/logo.jpg" alt="Barnabas">
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="section-title">
+        <h2>Projects</h2><span class="muted">(Click to open on GitHub)</span>
+      </div>
+      <div class="projects" id="projectsGrid"></div>
+    </section>
+
+    <!-- DESIGNS -->
+    <section id="designs">
+      <div class="section-title">
+        <h2>SmartFix Studio — Designs</h2>
+        <span class="muted">(Random gallery • Download your favorites)</span>
+      </div>
+      <div class="gallery" id="gallery"></div>
+    </section>
+
+    <!-- EBOOKS -->
+    <section id="ebooks">
+      <div class="section-title"><h2>E-Books</h2><span class="muted">(Read or Download)</span></div>
+      <div class="ebooks">
+        <div class="ebook-list" id="ebookList"></div>
+        <div class="viewer"><iframe id="pdfFrame" src="" style="display:none"></iframe><p class="muted" id="viewerMsg">Open an e-book to read it here.</p></div>
+      </div>
+    </section>
+
+    <footer>
+      <div><strong>13TH DISCIPLE</strong> — SmartFix Studio • Built by vision.</div>
+      <div>© 2025 Barney Enterprise</div>
+    </footer>
+  </div>
+
+  <script>
+    const SAMPLE_PROJECTS = [
+      {"title":"SmartFix Barney","desc":"A diagnostic web app for troubleshooting phone issues.","github":"https://barnaba5.github.io/SmartFix-Barney2.0/","demo":"https://barnaba5.github.io/SmartFix-Barney2.0/"},
+      {"title":"Smartix-Art","desc":"Creative wallpaper and design posts.","github":"https://barnaba5.github.io/SmartFix-Art/","demo":"https://barnaba5.github.io/SmartFix-Art/"},
+      {"title":"YSC Portal","desc":"Ongoing youth system project.","github":"https://barnaba5.github.io/YSC-Portal/","demo":"https://barnaba5.github.io/YSC-Portal/"}
+    ];
+
+    // 🎨 Temporary sample posters (replace later)
+   const SAMPLE_DESIGNS = [
+
+  {"title":"SmartFix Studio Ad","thumb":"/images/designs/BARNEY (1).jpg","file":"/images/designs/BARNEY (1).jpg","meta":"Tech Poster • A4"},
+  {"title":"Dreamwave Album","thumb":"/images/designs/D.jpg","file":"/images/designs/D.jpg","meta":"Album Art • 2000×2000"},
+  {"title":"Light of Hope","thumb":"/images/designs/Add a heading (2).jpg","file":"/images/designs/Add a heading (2).jpg","meta":"Spiritual Poster • HD"},
+  {"title":"Urban Sparks","thumb":"/images/designs/Add a heading (5).jpg","file":"/images/designs/Add a heading (5).jpg","meta":"Poster • A3"},
+  {"title":"Barney","thumb":"/images/designs/Untitled design (3).jpg","file":"/images/designs/Untitled design (3).jpg","meta":"Poster • A3"},
+  {"title":"SmartFix Studio Ad","thumb":"/images/designs/Your paragraph text (1).jpg","file":"/images/designs/Your paragraph text (1).jpg","meta":"Tech Poster • A4"},
+  {"title":"Dreamwave Album","thumb":"/images/designs/Your paragraph text (4).jpg","file":"/images/designs/Your paragraph text (4).jpg","meta":"Album Art • 2000×2000"},
+  {"title":"Light of Hope","thumb":"/images/designs/Add a heading (2).jpg","file":"/images/designs/Add a heading (2).jpg","meta":"Spiritual Poster • HD"},
+  {"title":"Urban Sparks","thumb":"/images/designs/Add a heading (5).jpg","file":"/images/designs/Add a heading (5).jpg","meta":"Poster • A3"}
+].sort(() => 0.5 - Math.random());
+
+
+    const SAMPLE_EBOOKS = [
+  
+   {
+  "title": "The Forbidden Awakening",
+  "thumb": "THE FORBIDDEN AWAKENING.pdf",
+  "file": "THE FORBIDDEN AWAKENING.pdf",
+  "desc": "A journey of emotional healing and spiritual growth."
+},
+
+  {
+    "title": "SmartFix Studio Lyric Book",
+    "thumb": "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=400",
+    "file": "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=400",
+    "desc": "Lyrics and notes from SmartFix Studio music collection."
+  }
+];
+
+    function renderProjects(list){
+      const grid = document.getElementById('projectsGrid');
+      grid.innerHTML='';
+      list.forEach(p=>{
+        const el=document.createElement('div');
+        el.className='project visible';
+        el.innerHTML=`
+          <h3>${p.title}</h3>
+          <p>${p.desc}</p>
+          <div class="links">
+            <a class="link" href="${p.github}" target="_blank">GitHub</a>
+            <a class="link" href="${p.demo}" target="_blank">Live Demo</a>
+          </div>`;
+        grid.appendChild(el);
+      });
+    }
+
+    function renderDesigns(list){
+      const g=document.getElementById('gallery');
+      g.innerHTML='';
+      list.forEach(d=>{
+        const el=document.createElement('div');
+        el.className='design';
+        el.innerHTML=`
+          <img src="${d.thumb}" alt="${d.title}">
+          <h4>${d.title}</h4>
+          <div class="tools">
+            <small class="muted">${d.meta}</small>
+            <a class="download" href="${d.file}" download>⬇ Download</a>
+          </div>`;
+        g.appendChild(el);
+      });
+    }
+
+    function renderEbooks(list){
+      const container=document.getElementById('ebookList');
+      const frame=document.getElementById('pdfFrame');
+      const msg=document.getElementById('viewerMsg');
+      container.innerHTML='';
+      list.forEach(e=>{
+        const item=document.createElement('div');
+        item.className='ebook-item';
+        item.innerHTML=`
+          <img src="${e.thumb}" alt="${e.title}">
+          <div class="meta"><h4>${e.title}</h4><p class="muted">${e.desc}</p></div>
+          <div class="actions">
+            <button class="read-btn">Read</button>
+            <a class="download-ebook" href="${e.file}" download>Download</a>
+          </div>`;
+        item.querySelector('.read-btn').onclick=()=>{
+          frame.src=e.file;
+          frame.style.display='block';
+          msg.style.display='none';
+          frame.scrollIntoView({behavior:'smooth'});
+        };
+        container.appendChild(item);
+      });
+    }
+
+    window.onload=()=>{
+      renderProjects(SAMPLE_PROJECTS);
+      renderDesigns(SAMPLE_DESIGNS);
+      renderEbooks(SAMPLE_EBOOKS);
+    };
+  </script>
+  
+  <!-- 🔹 LOGO SECTION -->
+  <header class="site-header">
+    <a href="#">
+      <img src="images/logo.jpg" alt="SmartFix Studio Logo" class="logo">
+    </a>
+    <h1 class="brand">SmartFix Studio</h1>
+  </header>
+
+  <div class="wrap">
+    <div class="hero">
+      ...
+
+  <STYLE>/* LOGO SECTION */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 18px;
+  background: linear-gradient(90deg, #071019, #0c1322);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(110,231,183,0.3);
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.1);
+}
+
+.brand {
+  font-size: 20px;
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+</STYLE>
+  
+
+</body>
+</html>
